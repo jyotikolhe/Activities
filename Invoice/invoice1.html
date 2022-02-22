@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
+  
+
+    <title>Invoice</title>
+    <style>
+        .template {
+            width: 1300px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px outset rgb(17, 12, 12);
+        }
+
+        .right {
+            display: flex;
+            position: absolute;
+            height: 100%;
+            width: 60%;
+            z-index: 1;
+        }
+
+        .main {
+            display: grid;
+            width: 100%;
+            grid-template-columns: 1000px 1fr;
+        }
+
+
+
+        #language {
+            display: flex;
+            position: absolute;
+            left: 1000px;
+            margin-top: -1px;
+        }
+
+        #currency {
+            display: flex;
+            position: absolute;
+            left: 1100px;
+            margin-top: -54px;
+        }
+
+        #cd {
+            display: flex;
+            position: absolute;
+            left: 1100px;
+            margin-top: -48px;
+
+        }
+
+        #lan {
+            display: flex;
+            position: absolute;
+            left: 1000px;
+            margin-top: 6px;
+
+        }
+
+
+        #Quantity {
+            display: flex;
+            position: absolute;
+            left: 800px;
+            margin-top: -9px;
+        }
+
+        #firstNumber {
+            display: flex;
+            position: absolute;
+            left: 800px;
+            margin-top: 4px;
+        }
+
+        #Rate {
+            display: flex;
+            position: absolute;
+            left: 1000px;
+            margin-top: -46px;
+        }
+
+        #secondNumber {
+            display: flex;
+            position: absolute;
+            left: 1000px;
+            margin-top: -32px;
+        }
+
+        #Amount {
+            display: flex;
+            position: absolute;
+            left: 1200px;
+            margin-top: -103px;
+        }
+
+        #result {
+            display: flex;
+            position: absolute;
+            left: 1200px;
+            margin-top: -93px;
+
+        }
+
+        #Total {
+            display: flex;
+            position: absolute;
+            left: 1200px;
+            margin-top: -20px;
+
+        }
+
+        #TotalDue {
+            color: red;
+            font-size: 1.2em;
+        }
+
+        #download {
+            background-color: blue;
+            color: aliceblue;
+        }
+    </style>
+</head>
+
+<body id="target">
+    <div>
+        <p align="right">
+            <button id="download">Download</button>
+        </p>
+    </div>
+    <div id="invoice" class="template">
+        <div class="logo">
+            <img align=right src="C:\Users\Jyoti kolhe\OneDrive\Desktop\logo.jpeg" height=8% width=8%>
+        </div>
+
+        <div class="invoice1">
+            <h2 style="color:Red" class="name">Invoice</h2>
+            <table border="1" cellspacing="0" width="37%">
+                <tr>
+                    <td>
+                        Thank you for your purchase.Timely payment will be appreciated.</td>
+                </tr>
+            </table><br><br>
+        </div>
+
+        <div class="main">
+            <div class="left">
+                <label for="create-invoice-name" class="form-label">Invoice No:</label><br>
+                <input id="create-invoice-name" type="text" required class="form-control" placeholder="Invoice No."
+                    v-model="invoice.name">
+                <br><br><br><br>
+                <hr>
+                <h3 class="from">From</h3>
+                Searce Inc.<br>Rajiv Gandhi IT Park,<br>Pune-411057<br>India
+
+                <h3 class="to">To</h3>
+                <div>
+                    <textarea id="txtto" style="height:100px"></textarea>
+                </div><br>
+                <hr>
+                <br>
+                <h3 class="name">Name</h3>
+                <textarea id="txtname" style="height:100px;width:400px"></textarea><br>
+                <button onclick="myFunction()">Copy</button>
+
+
+
+            </div>
+
+            <div class=right">
+                <label id=language for="create-invoice-name" class="form-label">Languages:</label><br>
+                <div id="lan">
+                    <select dropdown>
+                        <option value="">English(US)</option>
+                    </select>
+                </div>
+                <br><br>
+
+                <label id=currency for="create-invoice-name" class="form-label">Currency:</label><br>
+                <div id="cd">
+                    <select dropdown>
+                        <option value="">Indian-Rupees</option>
+                        <option value="">U.S. Dollar(USD)</option>
+                        <option value="">British Pound-GBP</option>
+                        <option value="">European Euro(EUR)</option>
+                    </select>
+                </div>
+                <br><br><br>
+
+                <label>Date</label><br>
+                <input type="date">
+                <br><br>
+                <label for="create-invoice-name" class="form-label">Invoice Due</label><br>
+                <select dropdown>
+                    <option value="">After 5 days</option>
+                    <option value="">After 10 days</option>
+                    <option value="">After 15 days</option>
+                    <option value="">After 20 days</option>
+                    <option value="">After 25 days</option>
+                    <option value="">After 30 days</option>
+                </select>
+
+                <br><br>
+                <label for="create purchase" class="form-label">Purchase Order Number</label><br>
+                <input type="text" required class="form-control" placeholder="Purchase Order Number">
+                <br><br><br><br><br><br><br><br><br><br><br><br><br>
+                <form>
+                    <label id=Quantity for="create-invoice-Quantity" class="form-label"><b>Quantity</b></label><br>
+
+                    <input type="text" id="firstNumber" /> <br>
+                    <label id=Rate for="create-invoice-Rate" class="form-label"><b>Rate</b></label><br>
+                    <input type="text" id="secondNumber" /><br>
+
+                    <input type="button" onClick="multiplyBy()" Value="Calculate" />
+                </form>
+
+                <label id=Amount for="create-invoice-Rate" class="form-label"><b>Amount</b></label><br>
+                <b> <span id="result"></span><br></b>
+
+                <br>
+                <br>
+                <br><br>
+                <p>SubTotal:
+                    <b><span id="Subtotal"></span><br></b>
+                </p>
+                Value Added Tax(%): <input type="text" id="AddedTax" /><br>
+
+
+                <input type="button" onClick="totalBy()" Value="Total" />
+                <!-- <span id="Total"></span><br> -->
+
+                <p><b>Total Due:</b>
+                    <span id="TotalDue"></span><br>
+                </p>
+
+
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    function myFunction() {
+        var copyText = document.getElementById("txtname");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(copyText.value);
+        alert("Copied the text:" + copyText.value);
+    }
+
+    function multiplyBy() {
+        num1 = document.getElementById("firstNumber").value;
+        num2 = document.getElementById("secondNumber").value;
+        document.getElementById("result").innerHTML = num1 * num2;
+        document.getElementById("Subtotal").innerHTML = num1 * num2;
+
+    }
+    function totalBy() {
+        num1 = document.getElementById("firstNumber").value;
+        num2 = document.getElementById("secondNumber").value;
+        num3 = document.getElementById("AddedTax").value;
+        // document.getElementById("Total").innerHTML=(num1*num2)+(num3/100)*num1*num2;
+        document.getElementById("TotalDue").innerHTML = (num1 * num2) + (num3 / 100) * num1 * num2;
+
+    }
+</script>
+<script type="text/javascript">
+    var doc = new jsPDF();
+    var specialElementHandlers = {
+        '#editor': function (element, renderer) {
+            return true;
+        }
+    };
+     
+    $('#download').click(function () {
+        doc.fromHTML($('#invoice').html(), 15, 15, {
+            'width': 170,
+            'elementHandlers': specialElementHandlers
+        });
+        doc.save('sample_file.pdf');
+    });
+    </script>
+
+</html>
